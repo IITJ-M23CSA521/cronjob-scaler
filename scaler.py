@@ -9,7 +9,7 @@ config.load_incluster_config()
 api = client.AppsV1Api()
 
 # Call your ML model API to get desired number of replicas
-response = requests.get("http://localhost:5000/predict")
+response = requests.get("http://model-service/predict")
 predicted_replicas = int(response.json().get("replicas", 2))
 
 # Patch the deployment
