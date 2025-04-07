@@ -10,11 +10,11 @@ config.load_incluster_config()
 try:
     response = requests.get("http://model-service/predict")
     response.raise_for_status()
-    replicas = int(response.json().get("replicas", 1))
+    replicas = int(response.json().get("replicas", 2))
     print(f"[INFO] Predicted replicas from model: {replicas}")
 except Exception as e:
     print(f"[ERROR] Failed to fetch prediction: {e}")
-    replicas = 1  # Fallback
+    replicas = 2  # Fallback
 
 # Patch the demo-api deployment
 apps_v1 = client.AppsV1Api()
