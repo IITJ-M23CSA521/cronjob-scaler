@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: model-autoscaler
 spec:
-  schedule: "*/5 * * * *" # every 5 minutes
+  schedule: "*/5 * * * *"
   jobTemplate:
     spec:
       template:
