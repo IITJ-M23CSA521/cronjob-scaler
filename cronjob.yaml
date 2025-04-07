@@ -10,6 +10,6 @@ spec:
         spec:
           containers:
             - name: scaler
-              image: <your-dockerhub-username>/scaler:latest
-              imagePullPolicy: IfNotPresent
+              image: scaler:latest
+              imagePullPolicy: Never
           restartPolicy: OnFailure
