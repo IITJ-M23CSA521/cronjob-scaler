@@ -1,31 +1,36 @@
+# scaler.py
+
 import requests
-import json
 from kubernetes import client, config
 
-# Load kube config (inside the cluster)
+# Load Kubernetes in-cluster config
 config.load_incluster_config()
 
-# Kubernetes API client
-api = client.AppsV1Api()
+# Get replica count from model-service
+try:
+    response = requests.get("http://model-service/predict")
+    response.raise_for_status()
+    replicas = int(response.json().get("replicas", 1))
+    print(f"[INFO] Predicted replicas from model: {replicas}")
+except Exception as e:
+    print(f"[ERROR] Failed to fetch prediction: {e}")
+    replicas = 1  # Fallback
 
-# Call your ML model API to get desired number of replicas
-response = requests.get("http://model-service/predict")
-predicted_replicas = int(response.json().get("replicas", 2))
+# Patch the demo-api deployment
+apps_v1 = client.AppsV1Api()
 
-# Patch the deployment
-deployment_name = "model-service"
-namespace = "default"
-
-patch = {
+patch_body = {
     "spec": {
-        "replicas": predicted_replicas
+        "replicas": replicas
     }
 }
 
-api.patch_namespaced_deployment(
-    name=deployment_name,
-    namespace=namespace,
-    body=patch
-)
-
-print(f"Scaled {deployment_name} to {predicted_replicas} replicas.")
+try:
+    apps_v1.patch_namespaced_deployment(
+        name="demo-api",
+        namespace="default",
+        body=patch_body
+    )
+    print(f"[SUCCESS] Scaled 'demo-api' to {replicas} replicas")
+except Exception as e:
+    print(f"[ERROR] Failed to scale deployment: {e}")
