@@ -6,7 +6,7 @@ from datetime import datetime
 config.load_incluster_config()
 
 # Static configuration
-PREDICTION_URL = "http://localhost:8000/predict"
+PREDICTION_URL = "http://34.16.173.223:8000/predict"
 SERVICE_NAMES = ["demo-api", "demo-api-2"]  # Add more service names here
 
 # Current UTC timestamp in ISO 8601 format
