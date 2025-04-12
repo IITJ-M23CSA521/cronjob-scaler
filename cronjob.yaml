@@ -1,15 +1,16 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: model-autoscaler
+  name: scaler-cronjob
 spec:
-  schedule: "*/2 * * * *"
+  schedule: "*/5 * * * *" # Runs every 5 minutes
   jobTemplate:
     spec:
       template:
         spec:
+          serviceAccountName: scaler-sa
           containers:
             - name: scaler
-              image: scaler:latest
-              imagePullPolicy: Never
+              image: solankiom/scaler:latest
+              imagePullPolicy: Always
           restartPolicy: OnFailure
