@@ -12,3 +12,6 @@ kubectl get jobs
 kubectl get pods --selector=job-name=scaler-cronjob-manual
 kubectl logs <pod-name>
 
+kubectl get jobs --selector=job-name --sort-by=.metadata.creationTimestamp
+kubectl get jobs | grep scaler
+
