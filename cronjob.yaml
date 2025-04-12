@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: scaler-cronjob
 spec:
-  schedule: schedule: "0 */4 * * *" #"*/5 * * * *" # Runs every 5 minutes
+  schedule: "0 */4 * * *" # */5 * * * * Runs every 5 minutes
   jobTemplate:
     spec:
       template:
