@@ -1,0 +1,14 @@
+#CronJob
+
+kubectl get jobs
+
+kubectl get pods --selector=job-name=scaler-cron-27743892
+
+ ## Manually Trigger the CronJob (for testing)
+
+ kubectl create job --from=cronjob/scaler-cronjob scaler-cronjob-manual
+
+kubectl get jobs
+kubectl get pods --selector=job-name=scaler-cronjob-manual
+kubectl logs <pod-name>
+
