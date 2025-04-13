@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: scaler-cronjob
 spec:
-  schedule: "*/2 * * * *" # Runs every 5 minutes
+  schedule: "*/3 * * * *" # Runs every 5 minutes
   successfulJobsHistoryLimit: 2 # Keep only the last successful job
   failedJobsHistoryLimit: 2 # Keep only the last failed job
   jobTemplate:
