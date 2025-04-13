@@ -3,9 +3,12 @@ kind: CronJob
 metadata:
   name: scaler-cronjob
 spec:
-  schedule: "*/5 * * * *" # */5 * * * * kk 0 */4 * * * Runs every 5 minutes
+  schedule: "*/2 * * * *" # Runs every 5 minutes
+  successfulJobsHistoryLimit: 2 # Keep only the last successful job
+  failedJobsHistoryLimit: 2 # Keep only the last failed job
   jobTemplate:
     spec:
+      ttlSecondsAfterFinished: 240 # Delete job (and its pod) 5 minutes after it completes
       template:
         spec:
           serviceAccountName: scaler-sa
